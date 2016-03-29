@@ -1,0 +1,55 @@
+//Fix wrong step numbers
+
+/*
+  Script for fixing the step numbers that not in correct order.
+  
+  Notice that this script does not fix the Rfs number and Resume step number accordingly after fixing the step number.
+  
+  Script by Chunhui Wang
+  
+  Email: chunhui.wang@uni.lu
+  
+*/
+
+#include <addins/NLP/lib.dxl>
+//string PLUGIN_HOME = "\\DOORS_Plugin"
+
+#include "C:\\Users\\chunhui.wang\\SVVTestGenerator\\DOORS_Plugin\\utils.dxl"
+
+void fixStepNumbers() {
+
+    Object o = getFirstStepInCurrentFlow()
+
+    if(null != o) {
+        int step_number = getStepNumber(o)
+
+
+	    string o_text = o.TEXT
+	    while(matches(P_STEP,o_text)) {
+		
+		    //fix the step number
+		    string o_step_number = o_text[match 1]
+		    int number = 0
+		    if(isValidInt(o_step_number)){
+			    number = intOf o_step_number
+		    } else {
+			    ack o_step_number "is not a valid step number. "
+			    halt
+		    }
+		    if(number != step_number) {
+			    string o_step_prefix = o_step_number "."
+			    string p_step_prefix = step_number "."
+			    o_text = replace(o_text, o_step_prefix, p_step_prefix)
+			    o.TEXT = o_text
+		    }
+		    o = next o
+		    if(null o)
+			    break
+		    o_text = o.TEXT
+		    step_number++
+	    }
+	}
+}
+
+if(!isTitleObject(current Object))
+    fixStepNumbers()

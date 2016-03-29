@@ -1,0 +1,139 @@
+// My Menu File
+
+/*
+...some text...
+*/
+
+string TEXT = "Object Text"
+string HEAD = "Object Heading"
+string ABS = "Absolute Number"
+
+string p_RFS = "^RFS ([0-9]+|[SBG]AF[0-9]+\\-[0-9]+|[0-9]+\\-[0-9]+)$"
+string p_BasicFlow = "Basic Flow"
+string p_SpecificAlternativeFlow = "Specific Alternative Flow"
+string p_BoundedAlternativeFlow = "Bounded Alternative Flow"
+string p_GlobalAlternativeFlow = "Global Alternative Flow"
+
+void setFocusedObject(Object o) {
+    int o_no = o.ABS
+    Module m = current Module
+    gotoObject(o_no, m)
+}
+
+string findRfsStepNumber(Object parent) {
+    Object o
+    for o in parent do {
+        string text = o.TEXT
+        if(matches(p_RFS, text)) {
+            return text[match 1]
+        }
+    }
+    return ""
+}
+
+int getSequenceNumber(string pattern, Object o) {
+    Object parent_o = parent o
+    Object temp_o
+    int i = 1
+    for temp_o in parent_o do {
+        if(temp_o == o)
+            return i
+        string heading = temp_o.HEAD
+        if(matches(pattern, heading))
+            i++
+    }
+    return -1
+}
+
+string getPrefixTypeString(Object o) {
+    string heading = o.HEAD
+    ack heading
+    if(matches(p_BasicFlow,heading)) {
+        return ""
+    } else if(matches(p_SpecificAlternativeFlow, heading)) {
+        int number = getSequenceNumber(p_SpecificAlternativeFlow, o)
+        return "SAF" number "-"
+    } else if (matches(p_BoundedAlternativeFlow, heading)) {
+        int number = getSequenceNumber(p_SpecificAlternativeFlow, o)
+        return "BAF" number "-"
+    } else if (matches(p_GlobalAlternativeFlow, heading)) {
+        int number = getSequenceNumber(p_SpecificAlternativeFlow, o)
+        return "GAF" number "-"
+    }
+    return "-"
+}
+
+Object findInsertPoint(Object o, string rfs_string) {
+    Object parent = parent o
+    Object pointer = parent
+    Object temp_o = parent
+    string prefix = null
+    string p_prefix = "([SBG]AF)[0-9]+\\-[0-9]+"
+    if(matches(p_prefix, rfs_string))
+        prefix = rfs_string[match 1]
+    while((temp_o = next(sibling(temp_o))) != null) {
+    	string rfs = findRfsStepNumber(temp_o)
+    	string temp_prefix = null
+    	if(matches(p_prefix, rfs))
+    	    temp_prefix = rfs[match 1]
+    	if(null == prefix) {
+    	    if(null != temp_prefix)
+    	        continue
+    	    if(rfs_string >= rfs)
+    		    pointer = temp_o
+    	} else {
+            if(null == temp_prefix || prefix != temp_prefix)
+                break
+            if(rfs_string >= rfs)
+                pointer = temp_o
+    	}
+    }
+    return pointer
+}
+
+void createAlternativeFlow(Object pointer, string rfs_string, bool generateGuard) {
+    Object o = create(after(pointer))
+    o.HEAD = "Specific Alternative Flow"
+    Object child = create(below(o))
+    child.TEXT = "RFS " rfs_string
+    child = create(below(child))
+    if(generateGuard) {
+        child.TEXT = "1. IF <Guard Condition> THEN"
+        child = create(below(child))
+        child.TEXT = "2. <Step Text>"
+        child = create(below(child))
+        child.TEXT = "3. ABORT./RESUME STEP <Step Number>."
+        child = create(below(child))
+        child.TEXT = "4. ENDIF"
+    } else {
+        child.TEXT = "1. <Step Text>"
+        child = create(below(child))
+        child.TEXT = "2. ABORT./RESUME STEP <Step Number>."
+    }
+    child = create(below(child))
+    child.TEXT = "Postconditon: "
+    setFocusedObject(o)
+}
+
+void addAlternativeFlow()
+{
+	string P_STEP = "([0-9]+)\\..+"
+	string p_Validation = "VALIDATES THAT"
+	Object SelectedObject = current()
+	if(!null(SelectedObject)) {
+		string text = SelectedObject.TEXT
+			if("" == text || !matches(P_STEP, text))
+				ack "Selected Object is not a valid Step."
+			else {
+			    string step_n = text[match 1]
+			    Object parents = parent SelectedObject
+			    string rfs_prefix = getPrefixTypeString(parents)
+			    string rfs_string = rfs_prefix step_n
+			    Object pointer = findInsertPoint(SelectedObject, rfs_string)
+			    bool isValidationStep = matches(p_Validation, text)
+			    createAlternativeFlow(pointer, rfs_string, !isValidationStep)
+			}
+	}
+}
+ 
+addAlternativeFlow()

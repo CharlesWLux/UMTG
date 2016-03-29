@@ -1,0 +1,37 @@
+/*
+  
+  Script by Chunhui Wang
+  
+  Email: chunhui.wang@uni.lu
+  
+*/
+
+/***********************  VARIABLE DEFINITION *********************************/
+
+string TEXT = "Object Text"
+
+string P_STEP = "([0-9]+)\\..+"
+    
+/******************** FUNCTION DEFINITION  ************************************/
+bool isTitleObject(Object o) {
+    string text = o.TEXT
+    return "" == text
+}
+
+Object getFirstStepInCurrentFlow() {
+    Object parent = parent current Object
+    Object o
+    for o in parent do {
+        string text = o.TEXT
+        if(matches(P_STEP, text))
+            return o
+    }
+    return null
+}
+
+int getStepNumber(Object o) {
+    string text = o.TEXT
+    if(matches(P_STEP, text))
+        return intOf text[match 1]
+    return 1
+}

@@ -11,5 +11,5 @@
 
 #include <lib/umtgconf.dxl>
 
-system("START \"\" " UMTG_HOME "\\RUCM-Manual\\RUCM_User_Manual.pdf")
+system("explorer " UMTG_HOME "\\RUCM-Manual\\RUCM_User_Manual.pdf")
    

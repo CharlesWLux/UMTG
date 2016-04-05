@@ -11,6 +11,7 @@
 /***********************  VARIABLE DEFINITION *********************************/
 
 string P_STEP = "([0-9]+)\\..+"
+string P_RFS = "^RFS ([0-9]+|[SBG]AF[0-9]+\\-[0-9]+|[0-9]+\\-[0-9]+)$"
 string P_RUCM = "RUCM"
     
 /******************** FUNCTION DEFINITION  ************************************/
@@ -25,11 +26,19 @@ bool isTitleObject(Object o) {
 }
 
 Object getFirstStepInCurrentFlow() {
+    return getFirstMatchInCurrentFlow(P_STEP)
+}
+
+Object getRFSStepInCurrentFlow() {
+    return getFirstMatchInCurrentFlow(P_RFS)
+}
+
+Object getFirstMatchInCurrentFlow(string pattern) {
     Object parent = parent current Object
     Object o
     for o in parent do {
         string text = o.TEXT
-        if(matches(P_STEP, text))
+        if(matches(pattern, text))
             return o
     }
     return null

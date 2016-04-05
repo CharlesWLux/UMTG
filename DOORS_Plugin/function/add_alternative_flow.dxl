@@ -4,9 +4,7 @@
 Add alternative flow
 */
 
-string TEXT = "Object Text"
-string HEAD = "Object Heading"
-string ABS = "Absolute Number"
+#include <lib/abbr.dxl>
 
 string p_RFS = "^RFS ([0-9]+|[SBG]AF[0-9]+\\-[0-9]+|[0-9]+\\-[0-9]+)$"
 string p_BasicFlow = "Basic Flow"

@@ -1,0 +1,11 @@
+// My Menu File
+
+/*
+...some text...
+*/
+string include_list = "#include <lib/umtgconf.dxl>\n"
+include_list = include_list "#include <lib/utils.dxl>\n"
+include_list = include_list "#include <popup_nemu/rightclick.dxl>\n"
+include_list = include_list "#include <popup_nemu/trigger.dxl>\n"
+
+eval_(include_list)

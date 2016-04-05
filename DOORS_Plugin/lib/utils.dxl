@@ -6,13 +6,19 @@
   
 */
 
+#include <lib/abbr.dxl>
+
 /***********************  VARIABLE DEFINITION *********************************/
 
-string TEXT = "Object Text"
-
 string P_STEP = "([0-9]+)\\..+"
+string P_RUCM = "RUCM"
     
 /******************** FUNCTION DEFINITION  ************************************/
+bool isRUCMModule(Module m) {
+    string des = m.DES
+    return matches(P_RUCM, des)
+}
+
 bool isTitleObject(Object o) {
     string text = o.TEXT
     return "" == text

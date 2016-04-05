@@ -1,0 +1,70 @@
+//string operation library
+
+/*
+  
+  Script by Chunhui Wang
+  
+  Email: chunhui.wang@uni.lu
+  
+*/
+    
+/******************** FUNCTION DEFINITION  ************************************/
+
+string replace (string sSource, string sSearch, string sReplace) {
+    int iLen = length sSource
+    if (iLen == 0) return ""
+    
+    int iLenSearch = length(sSearch)
+    
+    if (iLenSearch == 0) { 
+        //raiseError ("Parameter error", "in strings.inc/replace: search string must not be empty")
+        return "" 
+    }
+    
+    // read the first char for latter comparison -> speed optimization
+    char firstChar = sSearch[0]
+    
+    Buffer s = create() 
+    int pos = 0, d1,d2;    
+    int i
+    
+    while (pos < iLen) { 
+        char ch = sSource[pos]; 
+        bool found = true
+        
+        if (ch != firstChar) {pos ++; s+= ch; continue}
+        for (i = 1; i < iLenSearch; i++) {
+           if (sSource[pos+i] != sSearch[i]) { found = false; break }
+        }
+        if (!found) {pos++; s+= ch; continue}
+        s += sReplace
+        pos += iLenSearch
+    }
+    
+    string result = stringOf s
+    delete s
+    return result
+}
+
+int indexof(string s, char i) {
+	int index = 0
+	int len = length s
+	for(index = 0; index < len; index++)
+	{
+		if(i == s[index])
+			return index
+	}
+	return -1
+}
+
+string getTagName(string heading) {
+
+	string pattern = "([^\\-\\(\\|_~]+)[\\-\\(\\|_~].*"
+
+	string tag = replace(heading, " ", "")
+	
+	if(matches(pattern, tag))
+		tag = tag[match 1]
+	
+	return tag
+}

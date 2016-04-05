@@ -11,10 +11,8 @@
   
 */
 
-#include <addins/NLP/lib.dxl>
-//string PLUGIN_HOME = "\\DOORS_Plugin"
-
-#include "C:\\Users\\chunhui.wang\\SVVTestGenerator\\DOORS_Plugin\\utils.dxl"
+#include <lib/string.dxl>
+#include <lib/utils.dxl>
 
 void fixStepNumbers() {
 

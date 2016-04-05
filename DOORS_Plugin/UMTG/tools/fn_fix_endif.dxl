@@ -1,0 +1,14 @@
+//Fix endif issue for AlternativeFlows
+
+/*
+  Script for fix the ordering issue of ENDIF and ABORT/RESUME STEP
+  
+  Script by Chunhui Wang
+  
+  Email: chunhui.wang@uni.lu
+  
+*/
+
+string FN_FIX_ENDIF = "function\\fix_endif.dxl"
+
+eval_("#include <" FN_FIX_ENDIF ">\n")

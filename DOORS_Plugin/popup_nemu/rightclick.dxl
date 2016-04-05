@@ -1,0 +1,47 @@
+// My Menu File
+
+/*
+...some text...
+*/
+
+void createUMTGMenu()
+{
+	createMenu(alwaysOn, "UMTG", null, null  )
+		createItem(alwaysOn,
+		"Fix Step Number",
+		null,
+		null,
+		modKeyCtrl,
+		null,
+		null,
+		"Fix all step numbers after inserting or deleting steps.",
+		"",
+		PLUGIN_HOME "\\function\\fix_flow_step_number.dxl")
+		
+		createItem(alwaysOn,
+		"Fix ENDIF Issue",
+		null,
+		null,
+		modKeyCtrl,
+		null,
+		null,
+		"Fix all issues about the position of ENDIF.",
+		"",
+		PLUGIN_HOME "\\function\\fix_endif.dxl")
+	end menu
+	
+	separator
+	
+	createItem(alwaysOn,
+			"Add Specific Alternative Flow",
+			null,
+			null,
+			modKeyCtrl,
+			null,
+			null,
+			"Add a specific alternative flow that refer to the selected step.",
+			"",
+			PLUGIN_HOME "\\function\\add_alternative_flow.dxl")
+}
+
+createUMTGMenu()

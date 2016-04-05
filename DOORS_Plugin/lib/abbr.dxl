@@ -1,0 +1,16 @@
+/*
+  
+  Script by Chunhui Wang
+  
+  Email: chunhui.wang@uni.lu
+  
+*/
+
+/***********************  VARIABLE DEFINITION *********************************/
+
+
+//General definitions
+    string TEXT = "Object Text"
+    string HEAD = "Object Heading"
+    string ABS = "Absolute Number"
+    string DES = "Description"

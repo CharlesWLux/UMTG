@@ -1,0 +1,16 @@
+//Fix wrong step numbers
+
+/*
+  Script for fixing the step numbers that not in correct order.
+  
+  Notice that this script does not fix the Rfs number and Resume step number accordingly after fixing the step number.
+  
+  Script by Chunhui Wang
+  
+  Email: chunhui.wang@uni.lu
+  
+*/
+
+string FN_FIX_STEP_NUMBER = "function\\fix_step_number.dxl"
+
+eval_("#include <" FN_FIX_STEP_NUMBER ">\n")

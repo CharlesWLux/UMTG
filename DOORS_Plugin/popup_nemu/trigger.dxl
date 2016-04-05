@@ -1,0 +1,13 @@
+// My Menu File
+
+/*
+...some text...
+*/
+
+void addTrigger() {
+    if(isRUCMModule(current Module)) {
+        trigger("Correct Step Numbers", module->object->all->attribute->"Object Text", post, modify, 10, "#include <" PLUGIN_HOME "/fix_step_number.dxl" ">")
+    }
+}
+
+//addTrigger()

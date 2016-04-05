@@ -1,0 +1,49 @@
+//functional library
+
+/*
+  
+  Script by Chunhui Wang
+  
+  Email: chunhui.wang@uni.lu
+  
+*/
+
+#include <lib/abbr.dxl>
+#include <lib/string.dxl>
+
+/******************** FUNCTION DEFINITION  ************************************/
+void printObject(Object o, Stream outfile)
+{
+	string h = o.HEAD
+	int index = indexof(h,':')
+	string tag, name
+	if(index != -1)
+		{tag = h[0:index-1];for(++index ;h[index] == ' '; index++){};name = h[index:]}
+	else
+		{tag = getTagName(h); name = ""}
+	tag = replace(tag," ","")
+	if("" == name)
+		outfile << "<" tag ">" "\n\n"
+	else
+		outfile << "<" tag " name=\"" name "\">" "\n\n"
+	Object oc
+	for oc in o do{
+		string hc = oc.HEAD
+		if("" == hc)
+			outfile << "<object objID=\"" oc.ABS "\" url=\"" getURL(oc) "\">" oc.TEXT "</object>" "\n\n"
+		else
+			printObject(oc, outfile)
+	}
+	outfile << "</" tag ">" "\n\n"
+}
+
+void exportCurrentModule(string file)
+{
+    Object o = first current Module
+    Module m = current
+    Stream outfile = write(file)
+
+    printObject(o, outfile)
+
+    close outfile
+}

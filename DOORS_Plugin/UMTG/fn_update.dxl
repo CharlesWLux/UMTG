@@ -1,0 +1,15 @@
+//Software update
+
+/*
+  Script for check if there is any update then update UMTG plugin to the latest version.
+  
+  Script by Chunhui Wang
+  
+  Email: chunhui.wang@uni.lu
+  
+*/
+
+#include <lib/umtgconf.dxl>
+
+system(UMTG_HOME "\\Update.cmd")
+   

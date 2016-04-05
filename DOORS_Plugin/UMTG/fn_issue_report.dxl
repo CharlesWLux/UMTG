@@ -1,0 +1,15 @@
+//Issue report
+
+/*
+  Script for launching the portal of issue/bug report of UMTG plugin on Bitbucket.
+  
+  Script by Chunhui Wang
+  
+  Email: chunhui.wang@uni.lu
+  
+*/
+
+string URL = "http://www.bitbucket.org/charles-wang/umtggenerator"
+
+system("explorer \"" URL "\"")
+   

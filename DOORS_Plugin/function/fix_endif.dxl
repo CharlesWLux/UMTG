@@ -1,0 +1,41 @@
+//Fix endif issue for AlternativeFlows
+
+/*
+  Script for fix the ordering issue of ENDIF and ABORT/RESUME STEP
+  
+  Script by Chunhui Wang
+  
+  Email: chunhui.wang@uni.lu
+  
+*/
+
+#include <lib/abbr.dxl>
+#include <lib/string.dxl>
+
+string P_ENDIF = "([0-9]+)\\..*ENDIF"
+
+string P_ABORT_RESUME = "([0-9]+)\\..*(ABORT|RESUME STEP)"
+
+Object o = first current Module
+
+while(!null o) {
+	string o_text = o.TEXT
+	if(matches(P_ENDIF,o_text)) {
+		Object p = next o
+		string p_text = p.TEXT
+		if(matches(P_ABORT_RESUME,p_text)) {
+	
+			//swap the order of the two object
+			move(o,p)
+		
+			//fix the step number
+			string o_step_prefix = o_text[match 1] "."
+			string p_step_prefix = p_text[match 1] "."
+			o_text = replace(o_text, o_step_prefix, p_step_prefix)
+			p_text = replace(p_text, p_step_prefix, o_step_prefix)
+			o.TEXT = o_text
+			p.TEXT = p_text
+		}
+	}
+	o = next o
+}

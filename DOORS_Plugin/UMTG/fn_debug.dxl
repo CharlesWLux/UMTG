@@ -1,0 +1,27 @@
+//RUCM syntax check - Debug Model
+
+/*
+  Script for checking RUCM syntax.
+  
+  This script lauched GATE UI for further debugging purpose.
+  
+  Script by Chunhui Wang
+  
+  Email: chunhui.wang@uni.lu
+  
+*/
+
+#include <lib/umtgconf.dxl>
+#include <lib/export.dxl>
+
+
+void main()
+{
+
+   exportCurrentModule(FILE_PATH)
+   
+   system("java -jar \"" APPLICATION_PATH "\"\\RUCM-NLP.jar -d \"" GATE_HOME_PATH "\"")
+   
+}
+
+main()

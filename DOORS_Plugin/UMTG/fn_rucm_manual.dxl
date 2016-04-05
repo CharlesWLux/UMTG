@@ -1,0 +1,15 @@
+//RUCM User Manual
+
+/*
+  Script for Launching the RUCM User Manual under the UMTG Installation Folder
+  
+  Script by Chunhui Wang
+  
+  Email: chunhui.wang@uni.lu
+  
+*/
+
+#include <lib/umtgconf.dxl>
+
+system("START \"\" " UMTG_HOME "\\RUCM-Manual\\RUCM_User_Manual.pdf")
+   

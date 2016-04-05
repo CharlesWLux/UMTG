@@ -1,6 +1,8 @@
 fn_check_syntax  c _ Check RUCM Syntax
 fn_debug   d _ Check RUCM Syntax (Debug Mode)
 ---------------------------
+fn_rucm_manual   m _ RUCM User Manual
+---------------------------
 tools t _ Tools
 fn_update  u _ Check Update...
 fn_issue_report  r _ Report Bug/Issue or Enhancement...

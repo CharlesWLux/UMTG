@@ -47,7 +47,7 @@ int getSequenceNumber(string pattern, Object o) {
 
 string getPrefixTypeString(Object o) {
     string heading = o.HEAD
-    //ack heading
+    ack heading
     if(matches(p_BasicFlow,heading)) {
         return ""
     } else if(matches(p_SpecificAlternativeFlow, heading)) {

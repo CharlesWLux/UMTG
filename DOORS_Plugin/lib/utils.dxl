@@ -25,14 +25,6 @@ bool isTitleObject(Object o) {
     return "" == text
 }
 
-Object getFirstStepInCurrentFlow() {
-    return getFirstMatchInCurrentFlow(P_STEP)
-}
-
-Object getRFSStepInCurrentFlow() {
-    return getFirstMatchInCurrentFlow(P_RFS)
-}
-
 Object getFirstMatchInCurrentFlow(string pattern) {
     Object parent = parent current Object
     Object o
@@ -42,6 +34,14 @@ Object getFirstMatchInCurrentFlow(string pattern) {
             return o
     }
     return null
+}
+
+Object getFirstStepInCurrentFlow() {
+    return getFirstMatchInCurrentFlow(P_STEP)
+}
+
+Object getRFSStepInCurrentFlow() {
+    return getFirstMatchInCurrentFlow(P_RFS)
 }
 
 int getStepNumber(Object o) {

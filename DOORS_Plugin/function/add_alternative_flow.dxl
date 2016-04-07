@@ -4,7 +4,7 @@
 Add alternative flow
 */
 
-#include <lib/abbr.dxl>
+#include <lib/utils.dxl>
 
 string p_RFS = "^RFS ([0-9]+|[SBG]AF[0-9]+\\-[0-9]+|[0-9]+\\-[0-9]+)$"
 string p_BasicFlow = "Basic Flow"
@@ -12,11 +12,6 @@ string p_SpecificAlternativeFlow = "Specific Alternative Flow"
 string p_BoundedAlternativeFlow = "Bounded Alternative Flow"
 string p_GlobalAlternativeFlow = "Global Alternative Flow"
 
-void setFocusedObject(Object o) {
-    int o_no = o.ABS
-    Module m = current Module
-    gotoObject(o_no, m)
-}
 
 string findRfsStepNumber(Object parent) {
     Object o

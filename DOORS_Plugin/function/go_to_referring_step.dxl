@@ -1,0 +1,53 @@
+// My Menu File
+
+/*
+Add alternative flow
+*/
+
+#include <lib/utils.dxl>
+
+string p_RFS = "^RFS ([0-9]+|[SBG]AF[0-9]+\\-[0-9]+|[0-9]+\\-[0-9]+)$"
+string p_BasicFlow = "Basic Flow"
+string p_SpecificAlternativeFlow = "Specific Alternative Flow"
+string p_BoundedAlternativeFlow = "Bounded Alternative Flow"
+string p_GlobalAlternativeFlow = "Global Alternative Flow"
+
+string findRfsStepNumber() {
+    Object o = getRFSStepInCurrentFlow()
+    string text = o.TEXT
+    if(matches(p_RFS, text)) {
+         return text[match 1]
+    }
+    return ""
+}
+
+void goTOReferringStep(){
+    string p_RFS = "^[0-9]+$"
+    string p_Alt_RFS = "^([SBG]AF)([0-9]+)\\-([0-9]+)$"
+    string p_Bounded_RFS = "^([0-9]+)\\-([0-9]+)$"
+    string rfs = findRfsStepNumber()
+    if(matches(rfs, p_RFS)) {
+        int step_no = intOf(rfs)
+        goToSpecifiedStep(1, p_BasicFlow, step_no)
+    }
+    if(matches(rfs, p_Alt_RFS)) {
+        string prefix = rfs[match 1]
+        string flow_no = rfs[match 2]
+        string step_no = rfs[match 3]
+        string flow_pattern = ""
+        if(prefix == "SAF") {
+            flow_pattern = p_SpecificAlternativeFlow
+        }else if(prefix == "BAF") {
+            flow_pattern = p_BoundedAlternativeFlow
+        }else if(prefix == "GAF") {
+            flow_pattern = p_GlobalAlternativeFlow
+        }
+        goToSpecifiedStep(flow_no, flow_pattern, step_no)
+    }
+    if(matches(rfs, p_Bounded_RFS)) {
+        string start = rfs[match 1]
+        string end = rfs[match 2]
+    }
+}
+
+goTOReferringStep()

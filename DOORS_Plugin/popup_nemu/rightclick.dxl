@@ -32,6 +32,21 @@ void createUMTGMenu()
 	
 	separator
 	
+	createMenu(alwaysOn, "Go To...", null, null  )
+		createItem(alwaysOn,
+		"Jump to the Reference Flow Step",
+		null,
+		null,
+		modKeyCtrl,
+		null,
+		null,
+		"Jump to the Reference Flow Step where current alternative flow branched from.",
+		"",
+		PLUGIN_HOME "\\function\\go_to_referring_step.dxl")
+	end menu
+	
+	separator
+	
 	createItem(alwaysOn,
 			"Add Specific Alternative Flow",
 			null,

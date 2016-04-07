@@ -32,8 +32,8 @@ void goTOReferringStep(){
     }
     if(matches(rfs, p_Alt_RFS)) {
         string prefix = rfs[match 1]
-        string flow_no = rfs[match 2]
-        string step_no = rfs[match 3]
+        int flow_no = intOf(rfs[match 2])
+        int step_no = intOf(rfs[match 3])
         string flow_pattern = ""
         if(prefix == "SAF") {
             flow_pattern = p_SpecificAlternativeFlow

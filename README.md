@@ -16,4 +16,5 @@ UMTG extends the original RUCM for test generation purpose and provides faciliti
 UMTG employs Natural Language Processing (NLP) to process the UCSs :
 
 1) Find violations of the template or restriction rules that may course ambiguity.
+
 2) Extract the behavioral information of the system which is used for test generation.

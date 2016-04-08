@@ -1,4 +1,3 @@
-# UMTG
 
 <img src="https://raw.githubusercontent.com/Charles-Wang-uni/UMTG/master/images/logo.png" width="200">
 

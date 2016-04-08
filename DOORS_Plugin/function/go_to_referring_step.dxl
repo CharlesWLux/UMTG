@@ -45,8 +45,9 @@ void goTOReferringStep(){
         goToSpecifiedStep(flow_no, flow_pattern, step_no)
     }
     if(matches(p_Bounded_RFS, rfs)) {
-        string start = rfs[match 1]
-        string end = rfs[match 2]
+        int step_no_start = intOf(rfs[match 1])
+        int step_no_end = intOf(rfs[match 2])
+        goToSpecifiedStep(1, p_BasicFlow, step_no_start, step_no_end)
     }
 }
 

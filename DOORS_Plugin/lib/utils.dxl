@@ -132,8 +132,20 @@ Object getSpecifiedStepInFlow(int sequence, Object flow) {
     return null
 }
 
-Object goToSpecifiedStep(int flow_no, string flow_pattern, int step_no) {
+void goToSpecifiedStep(int flow_no, string flow_pattern, int step_no_start, int step_no_end) {
     Object flow = getSpecifiedFlow(flow_no, flow_pattern)
-    Object step = getSpecifiedStepInFlow(step_no, flow)
-    setFocusedObject(step)
+    Object step_start = getSpecifiedStepInFlow(step_no_start, flow)
+    Object step_end = getSpecifiedStepInFlow(step_no_end, flow)
+    setFocusedObject(step_start)
+    if(step_no_start == step_no_end) {
+        setSelection(step_start)
+    } else if(step_no_end > step_no_start) {
+        setSelection(step_start, step_end)
+    } else {
+        ack "Invalid Reference Range: End number should bigger than the start number!"
+    }
+}
+
+void goToSpecifiedStep(int flow_no, string flow_pattern, int step_no) {
+    goToSpecifiedStep(flow_no, flow_pattern, step_no, step_no);
 }

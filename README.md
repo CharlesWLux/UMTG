@@ -15,6 +15,22 @@ UMTG extends the original RUCM for test generation purpose and provides faciliti
 
 UMTG employs Natural Language Processing (NLP) to process the UCSs :
 
-1) Find violations of the template or restriction rules that may course ambiguity.
+1. Find violations of the template or restriction rules that may course ambiguity.
 
-2) Extract the behavioral information of the system which is used for test generation.
+2. Extract the behavioral information of the system which is used for test generation.
+
+### UPDATE
+
+* [4/11/2016] Add new feature: Jump to Reference Flow Step
+
+  ##### DEMO: Specific Alternative Flow
+    <img src="https://raw.githubusercontent.com/Charles-Wang-uni/UMTG/master/images/ref1.gif" width="700">
+
+  ##### DEMO: Bounded Alternative Flow
+    <img src="https://raw.githubusercontent.com/Charles-Wang-uni/UMTG/master/images/ref2.gif" width="700">
+  
+* [4/05/2016] Add new feature: Add Specific Alternative Flow
+ 
+  ##### DEMO: Add a Specific Alternative Flow to a Basic Flow step
+    <img src="https://raw.githubusercontent.com/Charles-Wang-uni/UMTG/master/images/alt.gif" width="700">
+

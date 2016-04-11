@@ -1,5 +1,5 @@
 
-# <img src="https://raw.githubusercontent.com/Charles-Wang-uni/UMTG/master/images/logo.png" width="200">
+# <img src="https://raw.githubusercontent.com/Charles-Wang-uni/UMTG/master/images/logo.png" width="200"> Use Case Modelling for Test Generation
 
 UMTG is a toolset for automatically generating executable and traceable system test cases from use case specifications and domain model. In order to extract behavioral information from use case specifications and enable test automation, UMTG employs Natural Language Processing (NLP), a restricted form of use case specifications, and constraint solving.
 

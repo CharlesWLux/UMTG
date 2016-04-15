@@ -7,6 +7,28 @@
 void createUMTGMenu()
 {
 	createMenu(alwaysOn, "UMTG", null, null  )
+	    createItem(alwaysOn,
+        		"Check RUCM Syntax",
+        		null,
+        		null,
+        		modKeyCtrl,
+        		null,
+        		null,
+        		"Check RUCM Syntax.",
+        		"",
+        		PLUGIN_HOME "\\UMTG\\fn_check_syntax.dxl")
+
+	    createItem(alwaysOn,
+        		"Check RUCM Syntax (Debug Mode)",
+        		null,
+        		null,
+        		modKeyCtrl,
+        		null,
+        		null,
+        		"Check RUCM Syntax Debug with GATE-UI. Should used by perfession",
+        		"",
+        		PLUGIN_HOME "\\UMTG\\fn_debug.dxl")
+
 		createItem(alwaysOn,
 		"Fix Step Number",
 		null,
@@ -28,21 +50,6 @@ void createUMTGMenu()
 		"Fix all issues about the position of ENDIF.",
 		"",
 		PLUGIN_HOME "\\function\\fix_endif.dxl")
-	end menu
-	
-	separator
-	
-	createMenu(alwaysOn, "Go To...", null, null  )
-		createItem(alwaysOn,
-		"Jump to the Reference Flow Step",
-		null,
-		null,
-		modKeyCtrl,
-		null,
-		null,
-		"Jump to the Reference Flow Step where current alternative flow branched from.",
-		"",
-		PLUGIN_HOME "\\function\\go_to_referring_step.dxl")
 	end menu
 	
 	separator

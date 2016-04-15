@@ -29,6 +29,30 @@ void createUMTGMenu()
         		"",
         		PLUGIN_HOME "\\UMTG\\fn_debug.dxl")
 
+        createItem(alwaysOn,
+                "RUCM User Manual",
+                null,
+                null,
+                modKeyCtrl,
+                null,
+                null,
+                "Open RUCM User Manual.",
+                "",
+                PLUGIN_HOME "\\UMTG\\fn_rucm_manual.dxl")
+
+        createItem(alwaysOn,
+                "Update...",
+                null,
+                null,
+                modKeyCtrl,
+                null,
+                null,
+                "Update to the latest version.",
+                "",
+                PLUGIN_HOME "\\UMTG\\fn_update.dxl")
+
+        separator
+
 		createItem(alwaysOn,
 		"Fix Step Number",
 		null,

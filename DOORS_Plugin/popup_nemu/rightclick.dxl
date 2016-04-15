@@ -75,8 +75,6 @@ void createUMTGMenu()
 		"",
 		PLUGIN_HOME "\\function\\fix_endif.dxl")
 	end menu
-	
-	separator
 
 	separator
 
@@ -92,6 +90,8 @@ void createUMTGMenu()
     	"",
     	PLUGIN_HOME "\\function\\go_to_referring_step.dxl")
     end menu
+
+    separator
 	
 	createItem(alwaysOn,
 			"Add Specific Alternative Flow",

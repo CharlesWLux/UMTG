@@ -9,6 +9,6 @@
   
 */
 
-string FN_FIX_ENDIF = "function\\fix_endif.dxl"
+string FN_FIX_ENDIF = "..\\UMTG\\DOORS_Plugin\\function\\fix_endif.dxl"
 
 eval_("#include <" FN_FIX_ENDIF ">\n")

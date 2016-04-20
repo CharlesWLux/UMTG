@@ -11,8 +11,8 @@
   
 */
 
-#include <lib/string.dxl>
-#include <lib/utils.dxl>
+#include <../UMTG/DOORS_Plugin/lib/string.dxl>
+#include <../UMTG/DOORS_Plugin/lib/utils.dxl>
 
 void fixStepNumbers() {
 

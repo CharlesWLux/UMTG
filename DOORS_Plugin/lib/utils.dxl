@@ -6,21 +6,15 @@
   
 */
 
-#include <lib/abbr.dxl>
+#include <../UMTG/DOORS_Plugin/lib/abbr.dxl>
 
 /***********************  VARIABLE DEFINITION *********************************/
-string P_USE_CASE = "Use Case.+"
+
 string P_STEP = "([0-9]+)\\..+"
 string P_RFS = "^RFS ([0-9]+|[SBG]AF[0-9]+\\-[0-9]+|[0-9]+\\-[0-9]+)$"
 string P_RUCM = "RUCM"
     
 /******************** FUNCTION DEFINITION  ************************************/
-void setFocusedObject(Object o) {
-    int o_no = o.ABS
-    Module m = current Module
-    gotoObject(o_no, m)
-}
-
 bool isRUCMModule(Module m) {
     string des = m.DES
     return matches(P_RUCM, des)
@@ -29,27 +23,6 @@ bool isRUCMModule(Module m) {
 bool isTitleObject(Object o) {
     string text = o.TEXT
     return "" == text
-}
-
-bool hasParent(Object o) {
-    return parent o != null
-}
-
-string getHeader(Object o) {
-    string header = ""
-    if(o != null) {
-        header = o.HEAD
-    }
-    return header
-}
-
-string getText(Object o) {
-    string text = ""
-    if(o != null) {
-        text = o.TEXT
-        return text
-    }
-    return text
 }
 
 Object getFirstMatchInCurrentFlow(string pattern) {
@@ -76,76 +49,4 @@ int getStepNumber(Object o) {
     if(matches(P_STEP, text))
         return intOf text[match 1]
     return 1
-}
-
-Object getCurrentUseCaseHeader(Object o) {
-    if(o == null)
-        return o
-    string header = o.HEAD
-    if(isTitleObject(o) && matches(P_USE_CASE, header))
-        return o
-    if(hasParent(o)) {
-        if(isTitleObject(o)) {
-            o = parent o
-            header = o.HEAD
-            if(matches(P_USE_CASE, header))
-                return o
-        }
-        if(hasParent(parent o)) {
-            o = parent parent o
-            header = o.HEAD
-            if(matches(P_USE_CASE, header))
-            return o
-            }
-    }
-    return null
-}
-
-Object getSpecifiedFlow(int sequence, string pattern) {
-    Object parent = getCurrentUseCaseHeader(current)
-    Object temp_o = first parent
-    int counter = 0
-    if(matches(pattern, getHeader(temp_o))) {
-        counter++
-        if(sequence == counter)
-            return temp_o
-    }
-    while((temp_o = next(sibling(temp_o))) != null) {
-        if(matches(pattern, getHeader(temp_o))) {
-            counter++
-            if(sequence == counter)
-                return temp_o
-        }
-    }
-}
-
-Object getSpecifiedStepInFlow(int sequence, Object flow) {
-    Object o
-    int i = 1
-    for o in flow do {
-        if(matches(P_STEP, getText(o))) {
-            if(i == sequence)
-                return o
-            i++
-        }
-    }
-    return null
-}
-
-void goToSpecifiedStep(int flow_no, string flow_pattern, int step_no_start, int step_no_end) {
-    Object flow = getSpecifiedFlow(flow_no, flow_pattern)
-    Object step_start = getSpecifiedStepInFlow(step_no_start, flow)
-    Object step_end = getSpecifiedStepInFlow(step_no_end, flow)
-    setFocusedObject(step_start)
-    if(step_no_start == step_no_end) {
-        setSelection(step_start)
-    } else if(step_no_end > step_no_start) {
-        setSelection(step_start, step_end)
-    } else {
-        ack "Invalid Reference Range: End number should bigger than the start number!"
-    }
-}
-
-void goToSpecifiedStep(int flow_no, string flow_pattern, int step_no) {
-    goToSpecifiedStep(flow_no, flow_pattern, step_no, step_no);
 }

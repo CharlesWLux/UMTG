@@ -8,8 +8,8 @@
   
 */
 
-#include <lib/abbr.dxl>
-#include <lib/string.dxl>
+#include <../UMTG/DOORS_Plugin/lib/abbr.dxl>
+#include <../UMTG/DOORS_Plugin/lib/string.dxl>
 
 /******************** FUNCTION DEFINITION  ************************************/
 void printObject(Object o, Stream outfile)

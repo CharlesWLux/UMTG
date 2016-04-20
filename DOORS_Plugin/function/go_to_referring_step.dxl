@@ -4,7 +4,7 @@
 Add alternative flow
 */
 
-#include <lib/utils.dxl>
+#include <../UMTG/DOORS_Plugin/lib/utils.dxl>
 
 string p_RFS = "^RFS ([0-9]+|[SBG]AF[0-9]+\\-[0-9]+|[0-9]+\\-[0-9]+)$"
 string p_BasicFlow = "Basic Flow"

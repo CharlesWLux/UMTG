@@ -11,7 +11,7 @@
   
 */
 
-#include <lib/string.dxl>
+#include <../UMTG/DOORS_Plugin/lib/string.dxl>
 
 string TEXT = "Object Text"
 

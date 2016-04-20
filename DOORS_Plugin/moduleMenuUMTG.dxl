@@ -1,0 +1,20 @@
+// prevent dxl timeout dialog
+pragma runLim, 0
+
+string path = getenv("DOORSADDINS")
+
+path = richText path "\\"
+
+
+createMenu(alwaysOn, "UMTG", 'M', null)
+  createItem(alwaysOn, "Check RUCM Syntax", 'c', null, null, null, null, null, "", path "..\\UMTG\\DOORS_Plugin\\UMTG\\fn_check_syntax.dxl")
+  createItem(alwaysOn, "Check RUCM Syntax (Debug Mode)", 'd', null, null, null, null, null, "", path "..\\UMTG\\DOORS_Plugin\\UMTG\\fn_debug.dxl")
+  separator()
+  createItem(alwaysOn, "RUCM User Manual", 'm', null, null, null, null, null, "", path "..\\UMTG\\DOORS_Plugin\\UMTG\\fn_rucm_manual.dxl")
+  separator()
+  createMenu(alwaysOn, "Tools", 't', null )
+    createItem(alwaysOn, "Fix ENDIF Issue", 'c', null, null, null, null, null, "", path "..\\UMTG\\DOORS_Plugin\\UMTG\\tools\\fn_fix_endif.dxl")
+    createItem(alwaysOn, "Fix Step Number", 's', null, null, null, null, null, "", path "..\\UMTG\\DOORS_Plugin\\UMTG\\tools\\fn_fix_step_number.dxl")    
+  end menu
+  createItem(alwaysOn, "Report Bug/Issue or Enhancement...", 'r', null, null, null, null, null, "", path "..\\UMTG\\DOORS_Plugin\\UMTG\\fn_issue_report.dxl")
+end menu

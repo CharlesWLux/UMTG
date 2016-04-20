@@ -9,7 +9,8 @@
   
 */
 
-#include <lib/umtgconf.dxl>
+#include <../UMTG/DOORS_Plugin/lib/umtgconf.dxl>
+
 
 system("explorer " UMTG_HOME "\\RUCM-Manual\\RUCM_User_Manual.pdf")
    

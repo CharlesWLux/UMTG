@@ -11,11 +11,12 @@
 
 //UMTG configuration variables definition
     string LOCALAPPDATA_PATH = getenv("LOCALAPPDATA")
-    string UMTG_HOME = LOCALAPPDATA_PATH "\\UMTG"
+    string MODULEADDINS = getenv("DOORSADDINS")
+    string UMTG_HOME = MODULEADDINS "\\..\\UMTG"
     string PLUGIN_HOME = UMTG_HOME "\\DOORS_Plugin"
     string APPLICATION_PATH = UMTG_HOME "\\RUCM-NLP"
     string FILE_NAME = "RUCM.nlp"
-    string FILE_PATH = APPLICATION_PATH "\\" FILE_NAME
+    string FILE_PATH = LOCALAPPDATA_PATH "\\" FILE_NAME
     string GATE_HOME_PATH = UMTG_HOME "\\NLP_Lib"
     string POPUP_DEF_DXL = PLUGIN_HOME "\\popupdef.dxl"
 

@@ -9,7 +9,7 @@
   
 */
 
-#include <lib/umtgconf.dxl>
+#include <../UMTG/DOORS_Plugin/lib/umtgconf.dxl>
 
 system(UMTG_HOME "\\Update.cmd")
    

@@ -9,8 +9,8 @@
   
 */
 
-#include <lib/abbr.dxl>
-#include <lib/string.dxl>
+#include <../UMTG/DOORS_Plugin/lib/abbr.dxl>
+#include <../UMTG/DOORS_Plugin/lib/string.dxl>
 
 string P_ENDIF = "([0-9]+)\\..*ENDIF"
 

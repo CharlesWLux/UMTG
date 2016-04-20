@@ -11,15 +11,17 @@
   
 */
 
-#include <lib/umtgconf.dxl>
-#include <lib/export.dxl>
+#include <../UMTG/DOORS_Plugin/lib/umtgconf.dxl>
+#include <../UMTG/DOORS_Plugin/lib/export.dxl>
 
 void main()
 {
 
    exportCurrentModule(FILE_PATH)
 
-   system("java -jar \"" APPLICATION_PATH "\"\\RUCM-NLP.jar -c \"" GATE_HOME_PATH "\"")
+   //print "java -jar \"" APPLICATION_PATH "\"\\RUCM-NLP.jar -c \"" GATE_HOME_PATH "\"" " -f " LOCALAPPDATA_PATH "\\" FILE_NAME 
+
+   system("java -jar \"" APPLICATION_PATH "\"\\RUCM-NLP.jar -c \"" GATE_HOME_PATH "\"" " -f " LOCALAPPDATA_PATH "\\" FILE_NAME)
 
 }
 

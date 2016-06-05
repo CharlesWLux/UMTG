@@ -7,11 +7,11 @@ UMTG is integrated with two tools, IBM Doors and IBM Rational Rhapsody that are 
 
 ### UMTG plug-ins for IBM DOORS
 
-UMTG plug-ins for IBM DOORS is aimed at helping engineer to write high quality Use Case Specifications by following a Restricted Use Case Modeling (RUCM) Methodology[1].
+UMTG plug-ins for IBM DOORS is aimed at helping engineer to write high quality Use Case Specifications by following a Restricted Use Case Modeling (RUCM) Methodology<sup>[1]</sup>.
 
-RUCM relies on a use case template and a set of restriction rules for textual Use Case Specifications (UCSs) to reduce the imprecision and incompleteness inherent to UCSs. Controlled experiment evaluation of RUCM is easy to apply, has enough expressive power, helps improve the understandability and the quality of use cases and facilitates automated analysis.
+RUCM<sup>[1]</sup> relies on a use case template and a set of restriction rules for textual Use Case Specifications (UCSs) to reduce the imprecision and incompleteness inherent to UCSs. Controlled experiment evaluation of RUCM<sup>[1]</sup> is easy to apply, has enough expressive power, helps improve the understandability and the quality of use cases and facilitates automated analysis.
 
-UMTG extends the original RUCM for test generation purpose and provides facilities help engineer to write high quality UCSs that follow the template and obey all the rules.
+UMTG extends the original RUCM<sup>[1]</sup> for test generation purpose and provides facilities help engineer to write high quality UCSs that follow the template and obey all the rules.
 
 UMTG employs Natural Language Processing (NLP) to process the UCSs :
 

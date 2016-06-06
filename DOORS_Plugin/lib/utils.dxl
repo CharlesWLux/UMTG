@@ -1,9 +1,9 @@
 /*
-  
+
   Script by Chunhui Wang
-  
+
   Email: chunhui.wang@uni.lu
-  
+
 */
 
 #include <lib/abbr.dxl>
@@ -13,7 +13,12 @@ string P_USE_CASE = "Use Case.+"
 string P_STEP = "([0-9]+)\\..+"
 string P_RFS = "^RFS ([0-9]+|[SBG]AF[0-9]+\\-[0-9]+|[0-9]+\\-[0-9]+)$"
 string P_RUCM = "RUCM"
-    
+
+string P_BasicFlow = "Basic Flow"
+string P_SpecificAlternativeFlow = "Specific Alternative Flow"
+string P_BoundedAlternativeFlow = "Bounded Alternative Flow"
+string P_GlobalAlternativeFlow = "Global Alternative Flow"
+
 /******************** FUNCTION DEFINITION  ************************************/
 void setFocusedObject(Object o) {
     int o_no = o.ABS
@@ -29,6 +34,20 @@ bool isRUCMModule(Module m) {
 bool isTitleObject(Object o) {
     string text = o.TEXT
     return "" == text
+}
+
+bool isFlowObject(Object o) {
+  if(o == null || !isTitleObject(o))
+    return false
+  string head = o.HEAD
+  return (matches(P_BasicFlow, head) || matches(P_SpecificAlternativeFlow, head) || matches(P_BoundedAlternativeFlow, head) || matches(P_GlobalAlternativeFlow, head))
+}
+
+bool isUseCaseObject(Object o) {
+  if(o == null || !isTitleObject(o))
+    return false
+  string head = o.HEAD
+  return matches(P_USE_CASE, head)
 }
 
 bool hasParent(Object o) {

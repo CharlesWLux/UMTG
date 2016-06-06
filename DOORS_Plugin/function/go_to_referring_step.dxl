@@ -1,53 +1,47 @@
 // My Menu File
 
 /*
-Add alternative flow
+Go to the refering step
 */
 
 #include <lib/utils.dxl>
 
-string p_RFS = "^RFS ([0-9]+|[SBG]AF[0-9]+\\-[0-9]+|[0-9]+\\-[0-9]+)$"
-string p_BasicFlow = "Basic Flow"
-string p_SpecificAlternativeFlow = "Specific Alternative Flow"
-string p_BoundedAlternativeFlow = "Bounded Alternative Flow"
-string p_GlobalAlternativeFlow = "Global Alternative Flow"
-
 string findRfsStepNumber() {
     Object o = getRFSStepInCurrentFlow()
     string text = o.TEXT
-    if(matches(p_RFS, text)) {
+    if(matches(P_RFS, text)) {
          return text[match 1]
     }
     return ""
 }
 
 void goTOReferringStep(){
-    string p_RFS = "^[0-9]+$"
-    string p_Alt_RFS = "^([SBG]AF)([0-9]+)\\-([0-9]+)$"
-    string p_Bounded_RFS = "^([0-9]+)\\-([0-9]+)$"
+    string P_RFS = "^[0-9]+$"
+    string P_Alt_RFS = "^([SBG]AF)([0-9]+)\\-([0-9]+)$"
+    string P_Bounded_RFS = "^([0-9]+)\\-([0-9]+)$"
     string rfs = findRfsStepNumber()
-    if(matches(p_RFS, rfs)) {
+    if(matches(P_RFS, rfs)) {
         int step_no = intOf(rfs)
-        goToSpecifiedStep(1, p_BasicFlow, step_no)
+        goToSpecifiedStep(1, P_BasicFlow, step_no)
     }
-    if(matches(p_Alt_RFS, rfs)) {
+    if(matches(P_Alt_RFS, rfs)) {
         string prefix = rfs[match 1]
         int flow_no = intOf(rfs[match 2])
         int step_no = intOf(rfs[match 3])
         string flow_pattern = ""
         if(prefix == "SAF") {
-            flow_pattern = p_SpecificAlternativeFlow
+            flow_pattern = P_SpecificAlternativeFlow
         }else if(prefix == "BAF") {
-            flow_pattern = p_BoundedAlternativeFlow
+            flow_pattern = P_BoundedAlternativeFlow
         }else if(prefix == "GAF") {
-            flow_pattern = p_GlobalAlternativeFlow
+            flow_pattern = P_GlobalAlternativeFlow
         }
         goToSpecifiedStep(flow_no, flow_pattern, step_no)
     }
-    if(matches(p_Bounded_RFS, rfs)) {
+    if(matches(P_Bounded_RFS, rfs)) {
         int step_no_start = intOf(rfs[match 1])
         int step_no_end = intOf(rfs[match 2])
-        goToSpecifiedStep(1, p_BasicFlow, step_no_start, step_no_end)
+        goToSpecifiedStep(1, P_BasicFlow, step_no_start, step_no_end)
     }
 }
 

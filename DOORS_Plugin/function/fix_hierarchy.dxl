@@ -1,0 +1,67 @@
+/**
+ * Created by: chunhui.wang
+ * Creation date: Jun 6, 2016
+ *
+ * DXL Editor is provided by SODIUS (www.sodius.com)
+ */
+pragma encoding, "UTF-8"
+
+#include <lib/utils.dxl>
+
+void fixHierachyForFlow(Object o) {
+	Object oNext = create o
+	Object oTemp
+	Object oFirst  = null
+    Object oPrev   = null
+	int    count   = 0
+    Skip   objects = create
+	
+	if(!isFlowObject(o))
+		return
+	oFirst = first o
+	oTemp = oFirst
+	while(oTemp != oNext) {
+		put(objects, count++, oTemp)
+		oTemp = next oTemp
+	}
+	
+	for oTemp in objects do {
+		if (oTemp == oFirst)
+        {
+            oPrev = oTemp
+        }
+        else
+        {
+        	move(oTemp, oPrev)
+        	oPrev = oTemp
+        }
+		
+	}
+	
+	delete(objects)
+	delete(oNext)
+}
+
+void fixHierachyForAllFlows() {
+	Object o = null
+	Object oParent = null
+	Object oPrev = null
+	int    count   = 0
+    Skip   oFlows = create
+	for o in current Module do {
+		if(isFlowObject(o)) {
+			oParent = parent o
+			if(!isUseCaseObject(oParent) && oPrev != null)
+				move(o, oPrev)
+			put(oFlows, count++, o)
+			oPrev = o
+		}
+	}
+	
+	for o in oFlows do {
+		fixHierachyForFlow(o)
+	}
+
+}
+
+fixHierachyForAllFlows()

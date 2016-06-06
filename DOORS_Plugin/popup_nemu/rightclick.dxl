@@ -74,6 +74,17 @@ void createUMTGMenu()
 		"Fix all issues about the position of ENDIF.",
 		"",
 		PLUGIN_HOME "\\function\\fix_endif.dxl")
+		
+		createItem(alwaysOn,
+		"Fix Hierarchy Issue",
+		null,
+		null,
+		modKeyCtrl,
+		null,
+		null,
+		"Fix step hierarchies issues in flows.",
+		"",
+		PLUGIN_HOME "\\function\\fix_hierarchy.dxl")
 	end menu
 
 	separator

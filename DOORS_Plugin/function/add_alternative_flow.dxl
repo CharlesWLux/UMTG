@@ -6,18 +6,11 @@ Add alternative flow
 
 #include <lib/utils.dxl>
 
-string p_RFS = "^RFS ([0-9]+|[SBG]AF[0-9]+\\-[0-9]+|[0-9]+\\-[0-9]+)$"
-string p_BasicFlow = "Basic Flow"
-string p_SpecificAlternativeFlow = "Specific Alternative Flow"
-string p_BoundedAlternativeFlow = "Bounded Alternative Flow"
-string p_GlobalAlternativeFlow = "Global Alternative Flow"
-
-
 string findRfsStepNumber(Object parent) {
     Object o
     for o in parent do {
         string text = o.TEXT
-        if(matches(p_RFS, text)) {
+        if(matches(P_RFS, text)) {
             return text[match 1]
         }
     }
@@ -40,16 +33,16 @@ int getSequenceNumber(string pattern, Object o) {
 
 string getPrefixTypeString(Object o) {
     string heading = o.HEAD
-    if(matches(p_BasicFlow,heading)) {
+    if(matches(P_BasicFlow,heading)) {
         return ""
-    } else if(matches(p_SpecificAlternativeFlow, heading)) {
-        int number = getSequenceNumber(p_SpecificAlternativeFlow, o)
+    } else if(matches(P_SpecificAlternativeFlow, heading)) {
+        int number = getSequenceNumber(P_SpecificAlternativeFlow, o)
         return "SAF" number "-"
-    } else if (matches(p_BoundedAlternativeFlow, heading)) {
-        int number = getSequenceNumber(p_SpecificAlternativeFlow, o)
+    } else if (matches(P_BoundedAlternativeFlow, heading)) {
+        int number = getSequenceNumber(P_SpecificAlternativeFlow, o)
         return "BAF" number "-"
-    } else if (matches(p_GlobalAlternativeFlow, heading)) {
-        int number = getSequenceNumber(p_SpecificAlternativeFlow, o)
+    } else if (matches(P_GlobalAlternativeFlow, heading)) {
+        int number = getSequenceNumber(P_SpecificAlternativeFlow, o)
         return "GAF" number "-"
     }
     return "-"
@@ -88,22 +81,22 @@ void createAlternativeFlow(Object pointer, string rfs_string, bool generateGuard
     o.HEAD = "Specific Alternative Flow"
     Object child = create(below(o))
     child.TEXT = "RFS " rfs_string
-    child = create(below(child))
+    child = create(after(child))
     if(generateGuard) {
         child.TEXT = "1. IF <Guard Condition> THEN"
-        child = create(below(child))
+        child = create(after(child))
         child.TEXT = "2. <Step Text>"
-        child = create(below(child))
+        child = create(after(child))
         child.TEXT = "3. ABORT./RESUME STEP <Step Number>."
-        child = create(below(child))
+        child = create(after(child))
         child.TEXT = "4. ENDIF"
     } else {
         child.TEXT = "1. <Step Text>"
-        child = create(below(child))
+        child = create(after(child))
         child.TEXT = "2. ABORT./RESUME STEP <Step Number>."
     }
-    child = create(below(child))
-    child.TEXT = "Postconditon: "
+    child = create(after(child))
+    child.TEXT = "Postcondition: "
     setFocusedObject(o)
 }
 
@@ -127,5 +120,5 @@ void addAlternativeFlow()
 			}
 	}
 }
- 
+
 addAlternativeFlow()

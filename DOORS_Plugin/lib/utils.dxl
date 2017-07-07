@@ -12,7 +12,7 @@
 string P_USE_CASE = "Use Case.+"
 string P_STEP = "([0-9]+)\\..+"
 string P_RFS = "^RFS ([0-9]+|[SBG]AF[0-9]+\\-[0-9]+|[0-9]+\\-[0-9]+)$"
-string P_RUCM = "RUCM"
+string P_RUCM = "\\[RUCM\\].*"
 
 string P_BasicFlow = "Basic Flow"
 string P_SpecificAlternativeFlow = "Specific Alternative Flow"
@@ -167,4 +167,89 @@ void goToSpecifiedStep(int flow_no, string flow_pattern, int step_no_start, int 
 
 void goToSpecifiedStep(int flow_no, string flow_pattern, int step_no) {
     goToSpecifiedStep(flow_no, flow_pattern, step_no, step_no);
+}
+
+/******************************************************************************/
+// get the sequnce number of current flow. The sequence number indicates the
+//position of the current flow among the flows in the same type.
+// pattern indicates the type of current flow
+// o is the title object of current flow
+int getSequenceNumber(string pattern, Object o) {
+    Object parent_o = parent o
+    Object temp_o
+    int i = 1
+    for temp_o in parent_o do {
+        if(temp_o == o)
+            return i
+        string heading = temp_o.HEAD
+        if(matches(pattern, heading))
+            i++
+    }
+    return -1
+}
+
+/******************************************************************************/
+// get prefix Type based on the Title Object of the flow
+// o - is the title Object of the flow
+string getPrefixTypeString(Object o) {
+    string heading = o.HEAD
+    if(matches(P_BasicFlow,heading)) {
+        return ""
+    } else if(matches(P_SpecificAlternativeFlow, heading)) {
+        int number = getSequenceNumber(P_SpecificAlternativeFlow, o)
+        return "SAF" number "-"
+    } else if (matches(P_BoundedAlternativeFlow, heading)) {
+        int number = getSequenceNumber(P_SpecificAlternativeFlow, o)
+        return "BAF" number "-"
+    } else if (matches(P_GlobalAlternativeFlow, heading)) {
+        int number = getSequenceNumber(P_SpecificAlternativeFlow, o)
+        return "GAF" number "-"
+    }
+    return "-"
+}
+
+/******************************************************************************/
+// get RFS referce String which refer to the current Object.
+// o - is current Object in the flow.
+string getRFSRefToCurrentObj(Object o) {
+  string text = o.TEXT
+  string rfs_prefix
+  string rfs_string
+  if("" == text || !matches(P_STEP, text))
+    ack "Selected Object is not a valid Step."
+  else {
+    string step_n = text[match 1]
+    //Object parents = parent o
+    rfs_prefix = getPrefixTypeString(parent o)
+    rfs_string = rfs_prefix step_n
+  }
+  return rfs_string
+}
+
+
+/******************************************************************************/
+// get RFS step in the current alternative flow.
+// o - is the title Object of the flow.
+Object findRfsStepInCurrentFlow(Object parent) {
+    Object o
+    for o in parent do {
+        string text = o.TEXT
+        if(matches(P_RFS, text)) {
+            return o
+        }
+    }
+    return null
+}
+/******************************************************************************/
+// get RFS step Number in the current alternative flow.
+// o - is the title Object of the flow.
+string findRfsStepNumberInCurrentFlow(Object parent) {
+    Object refObj = findRfsStepInCurrentFlow(parent)
+    if(!(null refObj)) {
+      string text = refObj.TEXT
+      if(matches(P_RFS, text)) {
+          return text[match 1]
+        }
+    }
+    return ""
 }

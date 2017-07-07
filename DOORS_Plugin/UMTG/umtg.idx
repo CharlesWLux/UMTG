@@ -1,5 +1,6 @@
 fn_check_syntax  c _ Check RUCM Syntax
 fn_debug   d _ Check RUCM Syntax (Debug Mode)
+fn_export_proj  e _ Export UMTG Project
 ---------------------------
 fn_rucm_manual   m _ RUCM User Manual
 ---------------------------

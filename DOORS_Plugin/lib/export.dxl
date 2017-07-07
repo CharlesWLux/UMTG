@@ -22,6 +22,9 @@ void printObject(Object o, Stream outfile)
 	else
 		{tag = getTagName(h); name = ""}
 	tag = replace(tag," ","")
+	if(matches("UseCases|UseCaseSpecifications", tag)) {
+		tag = "UCS"
+	}
 	if("" == name)
 		outfile << "<" tag ">" "\n\n"
 	else
@@ -29,7 +32,7 @@ void printObject(Object o, Stream outfile)
 	Object oc
 	for oc in o do{
 		string hc = oc.HEAD
-		if("" == hc)
+		if("" == hc) 
 			outfile << "<object objID=\"" oc.ABS "\" url=\"" getURL(oc) "\">" oc.TEXT "</object>" "\n\n"
 		else
 			printObject(oc, outfile)
@@ -37,13 +40,28 @@ void printObject(Object o, Stream outfile)
 	outfile << "</" tag ">" "\n\n"
 }
 
-void exportCurrentModule(string file)
+Object findUcsObj() {
+	Object obj
+	string pattern = "(UCS|Use Cases)(:.+?)?"
+	for obj in current Module do{
+		string head = obj.HEAD
+		if(matches(pattern, head))
+			return obj
+	}
+	return null
+}
+
+void exportUseCases(string file)
 {
-    Object o = first current Module
-    Module m = current
-    Stream outfile = write(file)
+    Object o = findUcsObj()
+    if(o != null) {
+    	//Module m = current
+    	Stream outfile = write(file)
 
-    printObject(o, outfile)
+    	printObject(o, outfile)
 
-    close outfile
+    	close outfile
+    } else {
+    	errorBox "No use case is found in the current Module!"
+    }
 }

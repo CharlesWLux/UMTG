@@ -4,10 +4,32 @@
 Register for Triggers
 */
 
-void addTrigger() {
-    if(isRUCMModule(current Module)) {
-        trigger("Correct Step Numbers", module->object->all->attribute->"Object Text", post, modify, 10, "#include <" PLUGIN_HOME "/fix_step_number.dxl" ">")
-    }
+bool isDefined(string name) {
+	string triggerToDelete = "(Correct Step Numbers - modify|Correct Step Numbers - sync)"
+	return matches(triggerToDelete, name)
 }
 
-//addTrigger()
+void removeTrigger() {
+	Trigger t
+
+	for t in current Module do
+	{
+		string triggerName = name t
+
+		if (isDefined(triggerName))
+		{
+			delete t
+		}
+	}
+}
+
+void addTrigger() {
+    //if(isRUCMModule(current Module)) {
+        //trigger("Correct Step Numbers - modify", module->object->all->attribute->"Object Text", post, modify, 10, "#include <" PLUGIN_HOME "/function/fix_flow_step_number.dxl" ">")
+	//trigger("Correct Step Numbers - sync", module->object->all, post, sync, 10, "#include <" PLUGIN_HOME "/function/fix_flow_step_number.dxl" ">")
+    //}
+}
+
+removeTrigger()
+
+addTrigger()

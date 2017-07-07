@@ -6,48 +6,6 @@ Add alternative flow
 
 #include <lib/utils.dxl>
 
-string findRfsStepNumber(Object parent) {
-    Object o
-    for o in parent do {
-        string text = o.TEXT
-        if(matches(P_RFS, text)) {
-            return text[match 1]
-        }
-    }
-    return ""
-}
-
-int getSequenceNumber(string pattern, Object o) {
-    Object parent_o = parent o
-    Object temp_o
-    int i = 1
-    for temp_o in parent_o do {
-        if(temp_o == o)
-            return i
-        string heading = temp_o.HEAD
-        if(matches(pattern, heading))
-            i++
-    }
-    return -1
-}
-
-string getPrefixTypeString(Object o) {
-    string heading = o.HEAD
-    if(matches(P_BasicFlow,heading)) {
-        return ""
-    } else if(matches(P_SpecificAlternativeFlow, heading)) {
-        int number = getSequenceNumber(P_SpecificAlternativeFlow, o)
-        return "SAF" number "-"
-    } else if (matches(P_BoundedAlternativeFlow, heading)) {
-        int number = getSequenceNumber(P_SpecificAlternativeFlow, o)
-        return "BAF" number "-"
-    } else if (matches(P_GlobalAlternativeFlow, heading)) {
-        int number = getSequenceNumber(P_SpecificAlternativeFlow, o)
-        return "GAF" number "-"
-    }
-    return "-"
-}
-
 Object findInsertPoint(Object o, string rfs_string) {
     Object parent = parent o
     Object pointer = parent
@@ -57,7 +15,7 @@ Object findInsertPoint(Object o, string rfs_string) {
     if(matches(p_prefix, rfs_string))
         prefix = rfs_string[match 1]
     while((temp_o = next(sibling(temp_o))) != null) {
-    	string rfs = findRfsStepNumber(temp_o)
+    	string rfs = findRfsStepNumberInCurrentFlow(temp_o)
     	string temp_prefix = null
     	if(matches(p_prefix, rfs))
     	    temp_prefix = rfs[match 1]
@@ -107,17 +65,10 @@ void addAlternativeFlow()
 	Object SelectedObject = current()
 	if(!null(SelectedObject)) {
 		string text = SelectedObject.TEXT
-			if("" == text || !matches(P_STEP, text))
-				ack "Selected Object is not a valid Step."
-			else {
-			    string step_n = text[match 1]
-			    Object parents = parent SelectedObject
-			    string rfs_prefix = getPrefixTypeString(parents)
-			    string rfs_string = rfs_prefix step_n
-			    Object pointer = findInsertPoint(SelectedObject, rfs_string)
-			    bool isValidationStep = matches(p_Validation, text)
-			    createAlternativeFlow(pointer, rfs_string, !isValidationStep)
-			}
+    string rfs_string = getRFSRefToCurrentObj(SelectedObject)
+		Object pointer = findInsertPoint(SelectedObject, rfs_string)
+		bool isValidationStep = matches(p_Validation, text)
+		createAlternativeFlow(pointer, rfs_string, !isValidationStep)
 	}
 }
 

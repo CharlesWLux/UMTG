@@ -8,6 +8,7 @@ Go to the refering step
 
 string findRfsStepNumber() {
     Object o = getRFSStepInCurrentFlow()
+    if(null o) return ""
     string text = o.TEXT
     if(matches(P_RFS, text)) {
          return text[match 1]
@@ -20,6 +21,7 @@ void goTOReferringStep(){
     string P_Alt_RFS = "^([SBG]AF)([0-9]+)\\-([0-9]+)$"
     string P_Bounded_RFS = "^([0-9]+)\\-([0-9]+)$"
     string rfs = findRfsStepNumber()
+    if("" == rfs) return
     if(matches(P_RFS, rfs)) {
         int step_no = intOf(rfs)
         goToSpecifiedStep(1, P_BasicFlow, step_no)

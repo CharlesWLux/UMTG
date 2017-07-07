@@ -2,29 +2,90 @@
 
 /*
   Script for fixing the step numbers that not in correct order.
-  
+
   Notice that this script does not fix the Rfs number and Resume step number accordingly after fixing the step number.
-  
+
   Script by Chunhui Wang
-  
+
   Email: chunhui.wang@uni.lu
-  
+
 */
 
 #include <lib/string.dxl>
 #include <lib/utils.dxl>
 
+string getCorrectStepNumber(int step_no, bool isIncreaseStep) {
+  if(isIncreaseStep)
+    return ++step_no ""
+  else
+    return --step_no ""
+}
+
+string getCorrectRFS(string prefix, string step_no_str, int old_step_number, bool isIncreaseStep) {
+  string new_RFS = ""
+  if(prefix == "") {
+    if(matches("([0-9]+)\\-([0-9]+)", step_no_str)) {
+      int start = intOf step_no_str[match 1]
+      int end = intOf step_no_str[match 2]
+      string start_str = start ""
+      string end_str = end ""
+      //ack start_str "-" end_str
+      if(start == old_step_number)
+        new_RFS = "RFS " getCorrectStepNumber(start, isIncreaseStep) "-" end_str
+      else if(start < old_step_number && end >= old_step_number)
+        new_RFS = "RFS " start_str "-" getCorrectStepNumber(end, isIncreaseStep)
+    } else {
+      int step_no_int = intOf step_no_str
+      if(step_no_int >= old_step_number) {
+        //ack step_no_int " is old number"
+        new_RFS = "RFS " getCorrectStepNumber(step_no_int, isIncreaseStep)
+      }
+    }
+  } else if(matches(prefix "([0-9]+)$", step_no_str)) {
+    int step_no_int = intOf step_no_str[match 1]
+    if(step_no_int >= old_step_number) {
+      new_RFS = "RFS " prefix getCorrectStepNumber(step_no_int, isIncreaseStep)
+    }
+  }
+  return new_RFS
+}
+
+/******************************************************************************/
+// fix the RFS steps in the referce flow when the step number changed in the original flow.
+// o - is the step Object whose step number is changed.
+// old_step_number is the old step number to be chaged.
+void fixRFS(Object o, int old_step_number) {
+  string new_RFS = ""
+  int new_step_number = getStepNumber(o)
+  bool isIncreaseStep = new_step_number > old_step_number
+  string prefix = getPrefixTypeString(parent o)
+  string pattern = "^RFS ([0-9]+|" prefix "[0-9]+|[0-9]+\\-[0-9]+)$"
+  Object parentObj = parent o
+  Object cur
+  for cur in parent parentObj do {
+    Object refObj = findRfsStepInCurrentFlow(cur)
+    if(!(null refObj)){
+      string ref = refObj.TEXT
+      if(matches(pattern, ref)) {
+        string step_no_str = ref[match 1]
+        new_RFS = getCorrectRFS(prefix, step_no_str, old_step_number, isIncreaseStep)
+      }
+      if("" != new_RFS)
+        refObj.TEXT = new_RFS
+      }
+  }
+}
+
 void fixStepNumbers() {
-
     Object o = getFirstStepInCurrentFlow()
-
+    Object firstChangedStep = null
+    int oldFirstStepNumber
     if(null != o) {
-        int step_number = getStepNumber(o)
+      //int step_number = getStepNumber(o)
+      int step_number = 1
+	    string o_text = richText o.TEXT
 
-
-	    string o_text = o.TEXT
 	    while(matches(P_STEP,o_text)) {
-		
 		    //fix the step number
 		    string o_step_number = o_text[match 1]
 		    int number = 0
@@ -35,18 +96,25 @@ void fixStepNumbers() {
 			    halt
 		    }
 		    if(number != step_number) {
+          if(null firstChangedStep) {
+            firstChangedStep = o
+            oldFirstStepNumber = number
+          }
 			    string o_step_prefix = o_step_number "."
 			    string p_step_prefix = step_number "."
 			    o_text = replace(o_text, o_step_prefix, p_step_prefix)
-			    o.TEXT = o_text
+			    o.TEXT = richText o_text
 		    }
 		    o = next o
 		    if(null o)
 			    break
-		    o_text = o.TEXT
+		    o_text = richText o.TEXT
 		    step_number++
 	    }
 	}
+  if(!(null firstChangedStep)) {
+    fixRFS(firstChangedStep, oldFirstStepNumber)
+  }
 }
 
 if(!isTitleObject(current Object))

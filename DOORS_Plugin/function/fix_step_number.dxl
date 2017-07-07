@@ -22,7 +22,7 @@ int step_number = 1
 Object o = first current Module
 
 while(!null o) {
-	string o_text = o.TEXT
+	string o_text = richText o.TEXT
 	while(matches(P_STEP,o_text)) {
 		
 		//fix the step number
@@ -38,12 +38,12 @@ while(!null o) {
 			string o_step_prefix = o_step_number "."
 			string p_step_prefix = step_number "."
 			o_text = replace(o_text, o_step_prefix, p_step_prefix)
-			o.TEXT = o_text
+			o.TEXT = richText o_text
 		}
 		o = next o
 		if(null o)
 			break
-		o_text = o.TEXT
+		o_text = richText o.TEXT
 		step_number++
 	}
 	if(null o)

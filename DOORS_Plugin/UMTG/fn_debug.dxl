@@ -18,9 +18,9 @@
 void main()
 {
 
-   exportCurrentModule(FILE_PATH)
+   exportUseCases(FILE_PATH)
    
-   system("java -jar \"" APPLICATION_PATH "\"\\RUCM-NLP.jar -d \"" GATE_HOME_PATH "\"")
+   system("java -version:1.7 -jar \"" APPLICATION_PATH "\"\\RUCM-NLP.jar -d \"" GATE_HOME_PATH "\"")
    
 }
 
